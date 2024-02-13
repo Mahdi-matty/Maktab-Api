@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS Maktab_db;
+CREATE DATABASE Maktab_db;
