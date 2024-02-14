@@ -42,7 +42,8 @@ router.get('/:id', (req, res)=>{
 router.put('/:id', (req,res)=>{
     Subject.update({
         title: req.body.title,
-        level: req.body.level
+        level: req.body.level,
+        subjectPic: req.body.subjectPic
     },{
         where: {
             id: req.params.id

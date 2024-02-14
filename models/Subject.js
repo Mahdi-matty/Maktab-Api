@@ -11,7 +11,10 @@ Subject.init({
     level: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
+    },
+    subjectPic: {
+      type: DataTypes.STRING,
+    },
 },{
     sequelize, 
 });
