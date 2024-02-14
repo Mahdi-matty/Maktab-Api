@@ -33,8 +33,8 @@ router.get('/:id', (req,res)=>{
 router.post('/', (req, res)=>{
     Student.create({
         username:req.body.username,
-        password:req.body.password,
         email: req.body.email,
+        password:req.body.password
     }).then((newUser)=>{
         const token = jwt.sign({
             email:newUser.email,
@@ -47,7 +47,6 @@ router.post('/', (req, res)=>{
             token,
             student:newUser
         })
-        res.json(newUser)
     }).catch((err)=>{
         console.log(err);
         res.status(500).json({msg: 'internal server error', err})
@@ -99,7 +98,7 @@ router.delete('/:id', (req, res)=>{
 router.post('/login', (req,res)=>{
     Student.findOne({
         where: {
-            id: req.params.id
+            username:req.body.username
         }
     }).then((foundUser)=>{
         if(!foundUser || !bcrypt.compareSync(req.body.password,foundUser.password)){

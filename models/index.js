@@ -4,7 +4,12 @@ const Subject = require('./Subject')
 const StudentFriend = require('./StudentFriend')
 
 
-Student.belongsToMany(Student, { through: StudentFriend, as: 'friends' })
+Student.belongsToMany(Student, {
+    through: StudentFriend,
+    as: 'friends',
+    foreignKey: 'studentId', 
+    otherKey: 'friendId'  
+  });
 Student.hasMany(Teacher)
 Student.hasMany(Subject)
 

@@ -1,6 +1,5 @@
 const express = require("express");
 const sequelize = require('./config/connection');
-const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const allRoutes = require('./controllers/');
 const PORT = process.env.PORT || 3001;

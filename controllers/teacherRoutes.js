@@ -9,7 +9,7 @@ const { text } = require('body-parser');
 
 
 router.get('/', (req, res)=>{
-    Teacher.findAll((allteacher)=>{
+    Teacher.findAll().then(allteacher=>{
         res.json(allteacher)
     }).catch((err)=>{
         console.log(err);
@@ -96,7 +96,7 @@ router.delete('/:id', (req, res)=>{
 router.post('/login', (req,res)=>{
     Teacher.findOne({
         where: {
-            id: req.params.id
+            username:req.body.username
         }
     }).then((foundUser)=>{
         if(!foundUser || !bcrypt.compareSync(req.body.password,foundUser.password)){
