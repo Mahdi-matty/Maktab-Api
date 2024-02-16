@@ -58,6 +58,10 @@ const subjectData = [
         level: 1
     },
     {
+        title: `Full-Stack Developer`,
+        level: 2
+    },
+    {
         title: `Coding Bootcamp`,
         level: 1
     },
@@ -74,7 +78,7 @@ const seedMe = async ()=>{
     const dbTeachers = await Teacher.bulkCreate(teacherData);
 
     await dbTeachers[0].addSubjects([1, 3]); 
-    await dbTeachers[1].addSubject([2]); 
+    await dbTeachers[1].addSubject([2, 4]); 
 
     console.log(`Seeding completed :)`);
     process.exit(0)

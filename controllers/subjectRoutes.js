@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const {Student, Teacher, Subject} = require('../models');
+const {Student, Teacher, Subject, StudentSubject} = require('../models');
 const jwt = require("jsonwebtoken");
 const withTokenAuth = require('../middleware/withTokenAuth');
 const Sequlize= require('../config/connection')
@@ -75,21 +75,6 @@ router.delete('/:id', withTokenAuth, (req, res)=>{
         res.status(500).json({msg: 'internal server error', err})
     })
 })
-
-router.get('/student-subjects/:studentId', (req, res) => {
-    const studentId = req.params.studentId
-    Student.findByPk(studentId,{
-      include: [Subject]
-    }).then(dbStudent => {
-        if (!dbStudent) {
-            res.status(404).json({ msg: "no such student!!!!" })
-        } else {
-            res.json(dbStudent.Subjects)
-        }
-    }).catch(err => {
-        res.status(500).json({ msg: "oh no!", err })
-    })
-});
 
 router.get('/teacher-subjects', withTokenAuth, (req, res) => {
     Teacher.findByPk(req.tokenData.id, {

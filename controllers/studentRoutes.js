@@ -55,7 +55,9 @@ router.post('/', (req, res)=>{
 
 router.put('/:id', withTokenAuth, (req, res)=>{
     Student.update({
-        studentSubject: req.body.studentSubject,
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password
     },{
         where: {
             id: req.tokenData.id

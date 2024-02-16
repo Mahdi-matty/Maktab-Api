@@ -27,13 +27,6 @@ Student.init(
         isEmail: true,
       },
     },
-    studentSubject: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Subject,
-        key: 'id',
-      }
-    }
   },
   {
     hooks: {

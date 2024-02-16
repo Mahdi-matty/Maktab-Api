@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const withTokenAuth = require('../middleware/withTokenAuth');
-const { Teacher, Subject, Student } = require(`../models`);
+const { Teacher, Subject, Student, StudentSubject } = require(`../models`);
 require('dotenv').config();
 
 
@@ -20,5 +20,8 @@ router.use('/api/teachers', teacherRoutes);
 
 const subjectRoutes = require(`./subjectRoutes`);
 router.use(`/api/subjects`, subjectRoutes);
+
+const StudentSubjectRoutes = require('./studentSubjectRoutes');
+router.use('/api/studentsubjects', StudentSubjectRoutes)
 
 module.exports = router;
