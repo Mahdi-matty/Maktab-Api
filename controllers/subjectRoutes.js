@@ -39,7 +39,8 @@ router.get('/:id', (req, res)=>{
     })
 })
 
-router.put('/:id', (req,res)=>{
+
+router.put('/:id', withTokenAuth, (req,res)=>{
     Subject.update({
         title: req.body.title,
         level: req.body.level,
@@ -59,7 +60,7 @@ router.put('/:id', (req,res)=>{
     })
 })
 
-router.delete('/:id', (req, res)=>{
+router.delete('/:id', withTokenAuth, (req, res)=>{
     Subject.destroy({
         where: {
             id: req.params.id
@@ -75,9 +76,10 @@ router.delete('/:id', (req, res)=>{
     })
 })
 
-router.get("/student-subjects", withTokenAuth, (req, res) => {
-    Student.findByPk(req.tokenData.id, {
-        include: [Subject]
+router.get('/student-subjects/:studentId', (req, res) => {
+    const studentId = req.params.studentId
+    Student.findByPk(studentId,{
+      include: [Subject]
     }).then(dbStudent => {
         if (!dbStudent) {
             res.status(404).json({ msg: "no such student!!!!" })
@@ -89,14 +91,14 @@ router.get("/student-subjects", withTokenAuth, (req, res) => {
     })
 });
 
-router.get("/teacher-subjects", withTokenAuth, (req, res) => {
+router.get('/teacher-subjects', withTokenAuth, (req, res) => {
     Teacher.findByPk(req.tokenData.id, {
         include: [Subject]
-    }).then(dbStudent => {
-        if (!dbStudent) {
+    }).then(dbteacher => {
+        if (!dbteacher) {
             res.status(404).json({ msg: "no such teacher!!!!" })
         } else {
-            res.json(dbStudent.Subjects)
+            res.json(dbteacher.Subjects)
         }
     }).catch(err => {
         res.status(500).json({ msg: "oh no!", err })

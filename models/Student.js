@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const sequelize = require('../config/connection');
+const Subject = require('./Subject');
 
 class Student extends Model { }
 
@@ -26,6 +27,13 @@ Student.init(
         isEmail: true,
       },
     },
+    studentSubject: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: Subject,
+        key: 'id',
+      }
+    }
   },
   {
     hooks: {

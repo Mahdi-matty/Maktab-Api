@@ -53,14 +53,12 @@ router.post('/', (req, res)=>{
     })
 })
 
-router.put('/:id', (req, res)=>{
+router.put('/:id', withTokenAuth, (req, res)=>{
     Student.update({
-        username:req.body.username,
-        password:req.body.password,
-        email: req.body.email,
+        studentSubject: req.body.studentSubject,
     },{
         where: {
-            id: req.params.id
+            id: req.tokenData.id
         }
     }).then((editeduser)=>{
         if(!editeduser[0]){

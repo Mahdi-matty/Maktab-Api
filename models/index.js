@@ -11,14 +11,20 @@ Student.belongsToMany(Student, {
     otherKey: 'friendId'  
   });
 Student.hasMany(Teacher)
-Student.hasMany(Subject)
+Student.belongsToMany(Subject, {
+  through: 'studentsubject',
+  foreignKey: 'studentSubject'
+})
 
 
 Teacher.hasMany(Subject)
 Teacher.hasMany(Student)
 
 Subject.hasOne(Teacher)
-Subject.hasMany(Student)
+Subject.belongsToMany(Student, {
+  through: 'studentsubject',
+  foreignKey: 'studentSubject'
+})
 
 module.exports= {
     Subject,

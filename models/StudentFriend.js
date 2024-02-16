@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+const Student = require('./Student')
 
 class StudentFriend extends Model {}
 
@@ -10,7 +11,7 @@ StudentFriend.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Student',
+        model: Student,
         key: 'id'
       }
     },
@@ -18,7 +19,7 @@ StudentFriend.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Student',
+        model: Student,
         key: 'id'
       }
     }
