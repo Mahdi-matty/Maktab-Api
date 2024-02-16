@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const {Student, Subject, Teacher, StudentFriend} = require('../models');
+const {Student, Subject, Teacher} = require('../models');
 const jwt = require("jsonwebtoken");
 const withTokenAuth = require('../middleware/withTokenAuth');
 const Sequlize= require('../config/connection')

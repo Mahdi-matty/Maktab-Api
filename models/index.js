@@ -1,16 +1,11 @@
 const Teacher = require('./Teacher')
 const Student = require('./Student')
 const Subject = require('./Subject')
-const StudentFriend = require('./StudentFriend')
 const StudentSubject =require('./StudentSubject')
+const Assignment  = require('./Assignment')
 
 
-Student.belongsToMany(Student, {
-    through: StudentFriend,
-    as: 'friends',
-    foreignKey: 'studentId', 
-    otherKey: 'friendId'  
-  });
+
 Student.hasMany(Teacher)
 Student.belongsToMany(Subject, {
   through: StudentSubject,
@@ -23,6 +18,15 @@ Subject.belongsToMany(Student, {
   otherKey: 'subjectId'
 })
 
+Subject.hasMany(Assignment, {
+  as: 'assignments',
+  foreignKey: 'subjectId'
+})
+
+Assignment.belongsTo(Subject, {
+  foreignKey: 'subjectId'
+})
+
 Teacher.hasMany(Subject)
 Teacher.hasMany(Student)
 
@@ -33,6 +37,6 @@ module.exports= {
     Subject,
     Student,
     Teacher,
-    StudentFriend,
-    StudentSubject
+    StudentSubject,
+    Assignment
 }

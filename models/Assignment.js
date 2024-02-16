@@ -1,19 +1,22 @@
 const { Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/connection');
 
-class ClassRoom extends Model { }
+class Assignment extends Model { }
 
-ClassRoom.init({
+Assignment.init({
     title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    level: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+    answer : {
+      type: DataTypes.STRING,
+    },
+    deadline: {
+      type: DataTypes.DATE,
     }
+   
 },{
     sequelize, 
 });
   
-module.exports = ClassRoom;
+module.exports = Assignment;
