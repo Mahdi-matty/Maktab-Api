@@ -26,6 +26,6 @@ router.use('/api/studentsubjects', StudentSubjectRoutes)
 
 
 const AssignmentRoutes = require('./assignmentRoutes');
-router.use('./api/assignments', AssignmentRoutes)
+router.use('/api/assignments', AssignmentRoutes)
 
 module.exports = router;

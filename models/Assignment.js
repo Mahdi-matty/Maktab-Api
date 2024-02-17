@@ -13,6 +13,10 @@ Assignment.init({
     },
     deadline: {
       type: DataTypes.DATE,
+    },
+    status: {
+      type: DataTypes.ENUM('pending', 'submitted'),
+      defaultValue: 'pending'
     }
    
 },{

@@ -17,7 +17,8 @@ router.get('/', (req,res)=>{
        Assignment.create({
            title: req.body.title,
            answer: req.body.answer,
-           deadline: req.body.deadline
+           deadline: req.body.deadline,
+           subjectId: req.body.subjectId
        }).then((newAssign)=>{
            res.json(newAssign)
        }).catch((err)=>{
@@ -39,7 +40,7 @@ router.get('/', (req,res)=>{
        })
    })
 
-   router.get('/:studentid', withTokenAuth, (req, res) => {
+   router.get('/student/:studentid', withTokenAuth, (req, res) => {
     const studentId = req.params.studentid;
     StudentSubject.findAll({
         where: {
@@ -77,7 +78,8 @@ router.get('/', (req,res)=>{
         Assignment.update({
             title: req.body.title,
             answer: req.body.answer,
-            deadline: req.body.deadline
+            deadline: req.body.deadline,
+            status: req.body.status
         },{
             where: {
                 id: req.params.id

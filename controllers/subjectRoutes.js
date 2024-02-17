@@ -76,8 +76,8 @@ router.delete('/:id', withTokenAuth, (req, res)=>{
     })
 })
 
-router.get('/teacher-subjects', withTokenAuth, (req, res) => {
-    Teacher.findByPk(req.tokenData.id, {
+router.get('/teacher-subjects/:teacherId', withTokenAuth, (req, res) => {
+    Teacher.findByPk(req.params.teacherId, {
         include: [Subject]
     }).then(dbteacher => {
         if (!dbteacher) {
