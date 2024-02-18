@@ -58,7 +58,7 @@ router.get('/pendingassignment/:assignmentId', (req, res)=>{
 router.post('/', withTokenAuth, (req, res) => {
    Notification.create({
     message: 'you have a pending assignment',
-    assignmentId: req.body.assignmentId
+    assignmentId: req.body.assignmentId,
    }).then(newNot=>{
     res.json(newNot)
    })
@@ -66,6 +66,21 @@ router.post('/', withTokenAuth, (req, res) => {
             console.error(err);
             res.status(500).json({ msg: "Internal Server Error" });
         });
+    })
+
+    router.put('/finish/:id', withTokenAuth, (req, res)=>{
+        Notification.update({
+            message: req.body.message,
+            status: req.body.status
+        }).then(updatedNot=>{
+            if(!updatedNot){
+                res.status(404).json('no such a assignment')
+            }
+            res.status(200).json(updatedNot)
+        }).catch(err=>{
+            console.log(err)
+            res.status(500).json({msg: 'internal server error', err})
+        })
     })
 
     module.exports = router
