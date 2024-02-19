@@ -11,6 +11,17 @@ router.get("/",(req,res)=>{
      res.send(`Hi`)   
 });
 
+
+// router.get('/clcr', (req, res)=>{
+//      const cloudinary = {
+//         cloud_name: process.env.CLOUDNAME,
+//         api_key: process.env.APIKEY,
+//         api_secret: process.env.APISECRET
+//      }
+//      res.json(cloudinary);
+// })
+
+
 const studentRoutes = require('./studentRoutes');
 router.use('/api/students', studentRoutes);
 
