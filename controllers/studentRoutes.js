@@ -17,7 +17,7 @@ router.get('/', (req, res)=>{
 
 router.get('/:id', (req,res)=>{
     Student.findByPk(req.params.id, {
-        include:[StudentFriend, Subject]
+        include:[Subject]
     }).then(studento=>{
         if(!studento){
             res.status(404).json({msg:'no such a user'})

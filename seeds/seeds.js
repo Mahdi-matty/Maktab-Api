@@ -113,7 +113,7 @@ const notesData =[
 ]
 
 const seedMe = async ()=>{
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
     const dbStudents = await Student.bulkCreate(studentData);
     const dbSubjects = await Subject.bulkCreate(subjectData);
     const dbTeachers = await Teacher.bulkCreate(teacherData);
@@ -122,7 +122,11 @@ const seedMe = async ()=>{
 
     await dbTeachers[0].addSubjects([1, 2]); 
     await dbTeachers[1].addSubject([3, 0]); 
-    await dbSubjects[0].addNotes([1, 2]);
+    const firstSubject = dbSubjects[0];
+    await Promise.all(dbNotes.map(async note => {
+        await note.setSubject(firstSubject);
+        await note.save();
+    }));
 
 
     console.log(`Seeding completed`);

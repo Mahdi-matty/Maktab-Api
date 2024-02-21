@@ -18,6 +18,13 @@ router.get('/:id', withTokenAuth, (req, res)=>{
         res.status(500).json({msg: 'internal server error', error})
     })
 })
+router.get('/', withTokenAuth, (req, res)=>{
+    Notes.findAll().then((allnotes)=>{
+            res.json(allnotes)
+    }).catch(error=>{
+        res.status(500).json({msg: 'internal server error', error})
+    })
+})
 
 router.post('/', withTokenAuth, (req, res)=>{
     const {title, content, questions} = req.body
