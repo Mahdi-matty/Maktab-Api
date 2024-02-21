@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const {Student, Teacher, Subject, StudentSubject} = require('../models');
+const {Student, Teacher, Subject, StudentSubject, Notes} = require('../models');
 const jwt = require("jsonwebtoken");
 const withTokenAuth = require('../middleware/withTokenAuth');
 const Sequlize= require('../config/connection')
@@ -38,7 +38,6 @@ router.get('/:id', (req, res)=>{
         res.status(500).json({msg: 'internal server error', err})
     })
 })
-
 
 router.put('/:id', withTokenAuth, (req,res)=>{
     Subject.update({
@@ -89,5 +88,24 @@ router.get('/teacher-subjects/:teacherId', withTokenAuth, (req, res) => {
         res.status(500).json({ msg: "oh no!", err })
     })
 });
+
+router.get('/notes/:subjectId', withTokenAuth, (req, res)=>{
+    const subjectId = req.params.subjectId ;
+    console.log('params:', req.params)
+    console.log(subjectId)
+    Notes.findAll({
+        where: {
+            subjectId: subjectId
+        }
+    }).then(Note=>{
+        if(!Note){
+            res.status(404).json('no notes')
+        }else {
+            res.json(Note)
+        }
+    }).catch(error=>{
+        res.status(500).json({msg: 'internal server error'})
+    })
+})
 
 module.exports= router

@@ -4,6 +4,7 @@ const Subject = require('./Subject')
 const StudentSubject =require('./StudentSubject')
 const Assignment  = require('./Assignment')
 const Notification =require('./Notification') 
+const Notes = require('./Notes')
 
 
 
@@ -23,6 +24,14 @@ Subject.hasMany(Assignment, {
   as: 'assignments',
   foreignKey: 'subjectId'
 })
+
+Subject.hasMany(Notes, {
+  foreignKey: 'subjectId'
+})
+
+Notes.belongsTo(Subject, {
+  foreignKey: 'subjectId'
+});
 
 Student.hasMany(Notification, {
   as: 'notifications',
@@ -57,5 +66,6 @@ module.exports= {
     Teacher,
     StudentSubject,
     Assignment,
-    Notification
+    Notification,
+    Notes
 }

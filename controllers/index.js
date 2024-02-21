@@ -42,4 +42,7 @@ router.use('/api/assignments', AssignmentRoutes)
 const NotificationRoutes= require('./notificationRoutes')
 router.use('/api/notification', NotificationRoutes)
 
+const NoteRoutes = require('./notesRoutes')
+router.use('/api/notes', NoteRoutes)
+
 module.exports = router;
