@@ -108,4 +108,27 @@ router.get('/notes/:subjectId', withTokenAuth, (req, res)=>{
     })
 })
 
+router.get('/exam/:subjectId', withTokenAuth, (req, res)=>{
+    const subjectId = req.params.subjectId ;
+    Notes.findAll({
+        where: {
+            subjectId: subjectId
+        }
+    }).then(Notes=>{
+        if(!Notes){
+            res.status(404).json('no notes')
+        }else {
+            let allQuestions = [];
+            Notes.forEach(note => {
+                allQuestions = allQuestions.concat(note.questions);
+            });
+            res.json({ questions: allQuestions });
+        }
+    }).catch(error=>{
+        res.status(500).json({msg: 'internal server error', error})
+    })
+})
+
+
+
 module.exports= router
