@@ -45,4 +45,7 @@ router.use('/api/notification', NotificationRoutes)
 const NoteRoutes = require('./notesRoutes')
 router.use('/api/notes', NoteRoutes)
 
+const examRoutes = require('./examRoutes')
+router.use('/api/exam', examRoutes)
+
 module.exports = router;

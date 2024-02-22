@@ -29,7 +29,7 @@ Subject.hasMany(Assignment, {
 Subject.hasMany(Notes, {
   foreignKey: 'subjectId'
 })
-Subject.hasMany(Exam, {
+Subject.hasOne(Exam, {
   foreignKey: 'subjectId'
 })
 Exam.belongsTo(Subject, {
