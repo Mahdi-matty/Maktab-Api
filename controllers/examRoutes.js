@@ -46,34 +46,69 @@ router.get('/subject/:subjectId', withTokenAuth, (req, res)=>{
     })
 })
 
-router.put('/:id', withTokenAuth, (req, res)=>{
-    const id = req.params.id
-    console.log(req.body)
+router.put('/:id', withTokenAuth, async (req, res) => {
+    const id = req.params.id;
+    console.log(req.body);
     Exam.update({
+        // questions: {
+        //         questionText: req.body.questionText,
+        //         questiontype: req.body.questiontype,
+        //         answer: req.body.answer
+        // },
         questions: req.body.questions,
         grade: req.body.grade
     },{
         where: {
-            id: id
-
+            id : id
         }
-    }).then(([rowsUpdated]) => { 
-            if (rowsUpdated === 0) {
-                res.status(404).json({ msg: 'No exam found for the given ID' });
-            } else {
-                return Exam.findByPk(id);
+    }).then(updatedexam=>{
+        if(!updatedexam){
+            res.status(404).json('no such a exam')
+        }
+        res.json(updatedexam)
+    }).catch(error=>{
+        res.status(500).json({msg: 'internal server error', error})
+    })
+})
+
+    // try {
+        
+    //         const updatedQuestions = await Promise.all(req.body.map(async (questionData) => {
+    //                     const updatedQuestion = await Exam.update({
+    //                         questions: {
+    //                             questionText: questionData.questionText,
+    //                             questiontype: questionData.questiontype,
+    //                             answer: questionData.answer
+    //                         },
+    //                         grade: req.body.grade
+    //                     }, {
+    //                         where: {
+    //                             id: id 
+    //                         }
+    //                     });
+    //                     return updatedQuestion;
+    //                 }));
+
+    //                 res.json(updatedQuestions);
+    //             }
+    //         catch (error) {
+    //                 console.error('Error updating exam:', error);
+    //                 res.status(500).json({ msg: 'Internal server error', error });
+    //             }
+    //     })
+       
+
+router.get('/:id', (req, res)=>{
+        Exam.findByPk(req.params.id).then((findexam)=>{
+            if(!findexam){
+                res.status(404).json('no such a exam')
+            }else{
+                res.json(findexam)
             }
+        }).catch((err)=>{
+            res.status(500).json({msg: 'internal server error', err})
         })
-        .then((updatedExam) => {
-            if (updatedExam) {
-                res.json(updatedExam);
-            }
-        })
-        .catch(error => {
-            console.error('Error updating exam:', error);
-            res.status(500).json({ msg: 'Internal server error', error });
-        });
-    });
+    })
 
 router.delete('/:id', (req, res)=>{
     Exam.destroy({
